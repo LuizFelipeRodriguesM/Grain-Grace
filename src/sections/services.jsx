@@ -82,6 +82,18 @@ export default function Services() {
     <>
       <style>
         {`
+          html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+          }
+
+          #root {
+            height: 100vh;
+            overflow: hidden;
+          }
+
           .hover-soft {
             transition: transform 180ms ease, box-shadow 180ms ease;
           }
@@ -103,23 +115,24 @@ export default function Services() {
             }
           }
 
-          @media (max-width: 768px) {
-            .mobile-header-text {
-              font-size: 1.5rem !important;
-              line-height: 1.3;
-            }
-            .mobile-card-title {
-              font-size: 1.25rem !important;
-            }
-            .mobile-card-text {
-              font-size: 0.9rem !important;
-            }
+          /* Fluid typography */
+          .mobile-header-text {
+            font-size: clamp(1.25rem, 3.2vw, 3rem) !important;
+            line-height: 1.2;
+          }
+          .mobile-card-title {
+            font-size: clamp(1.35rem, 2.2vw, 2.75rem) !important;
+            line-height: 1.2;
+          }
+          .mobile-card-text {
+            font-size: clamp(1.2rem, 1.8vw, 2rem) !important;
+            line-height: 1.5;
           }
         `}
       </style>
-      <div className="container-fluid min-vh-100">
+      <div className="container-fluid vh-100 overflow-hidden d-flex flex-column">
         {/* Header Section */}
-        <div className="row py-4 py-md-5 bg-white">
+        <div className="row py-2 py-md-3 bg-white" style={{ marginBottom: 0 }}>
           <div className="col d-flex align-items-center justify-content-start text-dark mx-2 mx-md-4">
             <h2 className="display-6 display-4 display-md-6 w-100 mobile-header-text">
               Como o Grain & Grace funciona na prática - Conectamos produtores e
@@ -130,18 +143,29 @@ export default function Services() {
 
         {/* Services Cards Section */}
         <div
-          className="row flex-grow-1 mx-2 mx-md-4 pb-4"
+          className="row flex-grow-1 mx-2 mx-md-4 pb-2"
           style={{
             backgroundColor: "#FFFFFF",
+            marginTop: 0,
           }}
         >
-          <div className="col-12 d-flex flex-column py-3 py-md-4">
+          <div
+            className="col-12 d-flex flex-column py-2 py-md-3 flex-grow-1"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+            }}
+          >
             {/* Primeira linha - 3 cards */}
-            <div className="row gx-4 gx-md-5 gx-lg-6 gy-5 gy-md-5 gy-lg-6 mb-4 mb-md-5">
+            <div
+              className="row gx-4 gx-md-5 gx-lg-6 gy-4 gy-md-4 gy-lg-5 mb-2 mb-md-3"
+              style={{ flex: 1, display: "flex" }}
+            >
               {cardsData.slice(0, 3).map((card) => (
                 <div key={card.id} className="col-lg-4 col-md-6 col-12 d-flex">
                   <div
-                    className="card shadow-sm border-0 w-100 hover-soft"
+                    className="card shadow-sm border-0 w-100 h-100 hover-soft"
                     style={{
                       ...card.style,
                       borderRadius: "24px",
@@ -167,11 +191,14 @@ export default function Services() {
             </div>
 
             {/* Segunda linha - 2 cards */}
-            <div className="row gx-4 gx-md-5 gy-5 gy-md-5 mt-2 mt-md-3">
+            <div
+              className="row gx-4 gx-md-5 gy-4 gy-md-4 mt-1 mt-md-2"
+              style={{ flex: 1, display: "flex" }}
+            >
               {cardsData.slice(3, 5).map((card) => (
                 <div key={card.id} className="col-lg-6 col-md-6 col-12 d-flex">
                   <div
-                    className="card shadow-sm border-0 w-100 hover-soft"
+                    className="card shadow-sm border-0 w-100 h-100 hover-soft"
                     style={{
                       ...card.style,
                       borderRadius: "24px",
