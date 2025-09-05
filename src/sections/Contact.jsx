@@ -2,17 +2,80 @@ import React, { useState } from "react";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
+
     setIsSubmitting(true);
-    // Placeholder submission. Integrate with email agent later.
-    setTimeout(() => {
-      alert("Cadastro realizado com sucesso! Bem-vindo ao Grain & Grace.");
+    setSubmitStatus(null);
+
+    try {
+      // Coletar dados do formulário
+      const formData = new FormData(e.target);
+      const data = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        userType: formData.get("userType"),
+        phone: formData.get("phone"),
+        message: formData.get("message"),
+        phonePrefix:
+          e.target.querySelector('select[name="phonePrefix"]')?.value || "+55",
+      };
+
+      // Contexto personalizado para o email
+      const context = {
+        platform: "Grain & Grace",
+        mission:
+          "Do campo para a mesa: reduzindo o desperdício, alimentando quem precisa",
+        userType: data.userType,
+        services: [
+          "Cadastro de Doações",
+          "Mapeamento de Coleta",
+          "Distribuição Justa",
+          "Notificações Inteligentes",
+          "Mapa Interativo",
+        ],
+        differentials: [
+          "Inclusão Social",
+          "Sustentabilidade",
+          "Tecnologia Simples",
+          "Impacto Mensurável",
+        ],
+      };
+
+      // Enviar dados para o servidor API
+      console.log("📧 Enviando dados para API...");
+      console.log("Dados coletados:", data);
+
+      const response = await fetch("http://localhost:3001/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+          name: data.name,
+          userType: data.userType,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus("success");
+        e.target.reset();
+        console.log("✅ Email enviado com sucesso:", result.messageId);
+      } else {
+        throw new Error(result.error || "Erro ao enviar email");
+      }
+    } catch (error) {
+      console.error("Erro no envio:", error);
+      setSubmitStatus("error");
+    } finally {
       setIsSubmitting(false);
-      e.target.reset();
-    }, 600);
+    }
   };
 
   return (
@@ -185,6 +248,27 @@ export default function Contact() {
                               : "Cadastrar-se no Grain & Grace"}
                           </button>
                         </div>
+
+                        {/* Status Messages */}
+                        {submitStatus === "success" && (
+                          <div className="col-12 mt-3">
+                            <div className="alert alert-success" role="alert">
+                              <i className="bi bi-check-circle-fill me-2"></i>
+                              Cadastro realizado com sucesso! Verifique seu
+                              email para as boas-vindas.
+                            </div>
+                          </div>
+                        )}
+
+                        {submitStatus === "error" && (
+                          <div className="col-12 mt-3">
+                            <div className="alert alert-danger" role="alert">
+                              <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                              Erro ao enviar cadastro. Tente novamente ou entre
+                              em contato conosco.
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </form>
                   </div>

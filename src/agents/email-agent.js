@@ -19,6 +19,11 @@ class EmailAgent {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_KEY,
       },
+      // Configurações adicionais para Gmail
+      secure: true,
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
   }
 
@@ -30,17 +35,38 @@ class EmailAgent {
    */
   async generateWelcomeContent(name = "Cliente", context = {}) {
     try {
-      const systemPrompt = `Você é um assistente especializado em criar emails de boas-vindas calorosos e personalizados.
-      Sempre crie mensagens que:
-      - Sejam calorosas e acolhedoras
-      - Personalizem com o nome da pessoa
-      - Destaquem os benefícios de fazer parte da comunidade
-      - Incluam um call-to-action sutil
-      - Mantenham um tom profissional mas amigável
+      const systemPrompt = `Você é um assistente especializado em criar emails de boas-vindas calorosos e personalizados para a plataforma Grain & Grace.
 
-      Contexto adicional: ${JSON.stringify(context)}`;
+IMPORTANTE:
+- NÃO inclua "Assunto:" ou qualquer referência a assunto no conteúdo
+- Adapte o conteúdo baseado no tipo de usuário:
+  - Para PRODUTOR: Foque em como cadastrar doações e usar o mapeamento de coleta
+  - Para ONG: Destaque distribuição justa, notificações inteligentes e impacto social
+  - Para BENEFICIÁRIO: Enfatize como encontrar alimentos próximos e usar o mapa interativo
 
-      const userPrompt = `Crie um email de boas-vindas personalizado para ${name}.`;
+Sempre crie mensagens que:
+1. Comece DIRETAMENTE com uma saudação calorosa personalizada (ex: "Prezado João,")
+2. Apresente a missão da plataforma
+3. Mencione os serviços relevantes para o perfil do usuário
+4. Destaque os diferenciais da plataforma
+5. Inclua sugestões práticas de ações que o usuário pode tomar
+6. Termine com um tom motivacional e de apoio
+7. Mantenha um tom profissional mas amigável e acolhedor
+
+Estrutura sugerida:
+- Saudação personalizada
+- Apresentação da plataforma e missão
+- Destaque dos serviços relevantes
+- Benefícios e diferenciais
+- Sugestões práticas de uso
+- Mensagem motivacional
+- Assinatura da equipe
+
+Contexto adicional: ${JSON.stringify(context)}`;
+
+      const userPrompt = `Crie APENAS o corpo do email de boas-vindas (sem assunto, sem "Assunto:") para ${name}, adaptado para o perfil de ${
+        context.userType || "usuário"
+      }. Use a estrutura sugerida e torne o conteúdo envolvente e motivacional, como se estivesse dando as boas-vindas a um novo membro valioso da comunidade Grain & Grace. Comece diretamente com "Prezado ${name}," ou similar.`;
 
       const chatCompletion = await this.groq.chat.completions.create({
         messages: [
@@ -53,17 +79,23 @@ class EmailAgent {
             content: userPrompt,
           },
         ],
-        model: "openai/gpt-oss-20b",
+        model: "llama-3.1-8b-instant",
         temperature: 0.7,
         max_tokens: 1024,
       });
 
-      return (
+      let content =
         chatCompletion.choices[0]?.message?.content ||
-        this.getDefaultWelcomeContent(name)
-      );
+        this.getDefaultWelcomeContent(name);
+
+      // Remover qualquer referência a "Assunto:" do conteúdo
+      content = content.replace(/^Assunto:.*$/gm, "").trim();
+      content = content.replace(/^assunto:.*$/gm, "").trim();
+
+      return content;
     } catch (error) {
-      console.error("Erro ao gerar conteúdo de boas-vindas:", error);
+      console.error("Erro ao gerar conteúdo de boas-vindas:", error.message);
+      console.log("⚠️ Usando conteúdo padrão devido ao erro na API");
       return this.getDefaultWelcomeContent(name);
     }
   }
@@ -76,12 +108,12 @@ class EmailAgent {
   getDefaultWelcomeContent(name) {
     return `Bem-vindo(a), ${name}!
 
-Estamos muito felizes em tê-lo(a) conosco no Grain Grace!
+Estamos muito felizes em tê-lo(a) conosco no Grain & Grace!
 
-Sua jornada começa agora e estamos aqui para apoiá-lo(a) em cada passo.
+Sua jornada para reduzir o desperdício alimentar e promover inclusão social começa agora. Estamos aqui para apoiá-lo(a) em cada passo, conectando produtores rurais e comunidades carentes por meio da doação de alimentos que seriam descartados.
 
 Atenciosamente,
-Equipe Grain Grace`;
+Equipe Grain & Grace`;
   }
 
   /**
@@ -93,10 +125,23 @@ Equipe Grain Grace`;
    */
   async sendWelcomeEmail(to, name = "Cliente", context = {}) {
     try {
+      console.log("🤖 Iniciando envio de email...");
+      console.log("📧 Destinatário:", to);
+      console.log("👤 Nome:", name);
+
+      // Validar configurações antes de prosseguir
+      if (!this.validateConfig()) {
+        throw new Error("Configurações inválidas");
+      }
+
       console.log("🤖 Gerando conteúdo personalizado de boas-vindas...");
       const welcomeContent = await this.generateWelcomeContent(name, context);
+      console.log(
+        "✅ Conteúdo gerado:",
+        welcomeContent.substring(0, 100) + "..."
+      );
 
-      const subject = "Bem-vindo ao Grain Grace!";
+      const subject = "Bem-vindo ao Grain & Grace - Do campo para a mesa!";
       const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #333;">Bem-vindo, ${name}!</h2>
@@ -116,9 +161,25 @@ Equipe Grain Grace`;
         text,
       };
 
+      console.log("📤 Enviando email...");
+      console.log("📧 De:", process.env.SMTP_USER);
+      console.log("📧 Para:", to);
+      console.log("📧 Assunto:", subject);
+
+      // Verificar conexão com o Gmail
+      try {
+        await this.transporter.verify();
+        console.log("✅ Conexão com Gmail verificada");
+      } catch (verifyError) {
+        console.error("❌ Erro na verificação do Gmail:", verifyError);
+        throw new Error(
+          `Falha na verificação do Gmail: ${verifyError.message}`
+        );
+      }
+
       const result = await this.transporter.sendMail(mailOptions);
       console.log(
-        "Email de boas-vindas enviado com sucesso:",
+        "✅ Email de boas-vindas enviado com sucesso:",
         result.messageId
       );
 
