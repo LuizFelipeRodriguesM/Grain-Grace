@@ -89,6 +89,7 @@ export default function Features() {
       </style>
 
       <div
+        id="features"
         className="container-fluid"
         style={{ position: "relative", zIndex: 2 }}
       >

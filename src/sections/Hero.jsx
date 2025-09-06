@@ -3,7 +3,7 @@ import Home from "./hero/Hero/Home";
 
 function Hero() {
   return (
-    <div>
+    <div id="hero">
       <Header />
       <Home />
     </div>

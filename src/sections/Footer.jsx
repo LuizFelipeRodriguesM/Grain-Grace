@@ -128,7 +128,12 @@ export default function Footer() {
                       </li>
                       <li className="mb-2">
                         <a href="#services" className="footer-link">
-                          Como Funciona
+                          Serviços
+                        </a>
+                      </li>
+                      <li className="mb-2">
+                        <a href="#features" className="footer-link">
+                          Reagir
                         </a>
                       </li>
                       <li className="mb-2">

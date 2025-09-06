@@ -120,7 +120,10 @@ export default function Services() {
           }
         `}
       </style>
-      <div className="container-fluid vh-100 overflow-hidden d-flex flex-column">
+      <div
+        id="services"
+        className="container-fluid vh-100 overflow-hidden d-flex flex-column"
+      >
         {/* Header Section */}
         <div
           className="row py-2 py-md-3"

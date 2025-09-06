@@ -8,26 +8,26 @@ function Header() {
   return (
     <header>
       <div className="logoGG">
-        <a className="gg" href="#">
+        <a className="gg" href="#hero">
           <img src={logo} alt="logo GG" />
         </a>
       </div>
       <nav>
         <ul>
           <li>
-            <a href="#">Início</a>
+            <a href="#hero">Início</a>
           </li>
           <li>
-            <a href="#">Sobre nós</a>
+            <a href="#about">Sobre nós</a>
           </li>
           <li>
-            <a href="#">Serviço</a>
+            <a href="#services">Serviços</a>
           </li>
           <li>
-            <a href="#">Características</a>
+            <a href="#features">Reagir</a>
           </li>
           <li>
-            <a href="#">Contato</a>
+            <a href="#contact">Contato</a>
           </li>
         </ul>
       </nav>

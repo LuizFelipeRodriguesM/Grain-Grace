@@ -3,6 +3,7 @@ import React from "react";
 const AboutUs = () => {
   return (
     <section
+      id="about"
       className="container d-flex flex-column flex-md-row align-items-start gap-5"
       style={{ paddingBottom: "8rem", position: "relative", zIndex: 2 }}
     >
