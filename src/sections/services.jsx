@@ -123,11 +123,17 @@ export default function Services() {
       <div
         id="services"
         className="container-fluid vh-100 overflow-hidden d-flex flex-column"
+        style={{ position: "relative", zIndex: 10 }}
       >
         {/* Header Section */}
         <div
           className="row py-2 py-md-3"
-          style={{ marginBottom: 0, backgroundColor: "transparent" }}
+          style={{
+            marginBottom: 0,
+            backgroundColor: "transparent",
+            position: "relative",
+            zIndex: 20,
+          }}
         >
           <div className="col d-flex align-items-center justify-content-start text-dark mx-2 mx-md-4">
             <h2 className="display-6 display-4 display-md-6 w-100 mobile-header-text">
