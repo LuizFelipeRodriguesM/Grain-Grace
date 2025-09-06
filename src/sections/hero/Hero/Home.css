@@ -1,145 +1,145 @@
-.hero{
-    display: flex;
+.hero {
+  display: flex;
+  margin-bottom: -300px;
 }
-.left-hero{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-}
-
-.left-text h1{
-    display: flex;
-    color: #000;
-    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: Montserrat;
-    font-size: 98px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    margin-left: 130px;
-    margin-top: 40px;
+.left-hero {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
 }
 
-.left-text span{
-    display: flex;
-    position: relative;
-    top: 120px;
-    right: 200px;
-    color: #F1F4EF;
+.left-text h1 {
+  display: flex;
+  color: #000;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: Montserrat;
+  font-size: 98px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 130px;
+  margin-top: 40px;
 }
 
-.left-text p{
-    color: #000;
-    font-family: Montserrat;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: normal;
-    width: 790px;
-    height: 112px;
-    margin-left: 140px;
-    margin-top: -90px;
-}
-.backgoundmesa{
-    display: flex;
-    position: relative;
-    width: 320px;
-    height: 120px;
-    left: 460px;
-    bottom: 110px;
-    background-color: #4DA14C ;
-    z-index: -1;
+.left-text span {
+  display: flex;
+  position: relative;
+  top: 120px;
+  right: 200px;
+  color: #f1f4ef;
 }
 
-.buttons{
-    display: flex;
-    gap: 18px;
-    margin-top: 48px;
-    margin-left: 140px;
+.left-text p {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  width: 790px;
+  height: 112px;
+  margin-left: 140px;
+  margin-top: -90px;
+}
+.backgoundmesa {
+  display: flex;
+  position: relative;
+  width: 320px;
+  height: 120px;
+  left: 460px;
+  bottom: 110px;
+  background-color: #4da14c;
+  z-index: -1;
 }
 
-.button-doar{
-    display: flex;
-    width: 230px;
-    height: 70px;
-    background-color: #4DA14C;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-    color: #F1F4EF;
-    font-family: Montserrat;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+.buttons {
+  display: flex;
+  gap: 18px;
+  margin-top: 48px;
+  margin-left: 140px;
 }
 
-.button-ajuda{
-    display: flex;
-    width: 229px;
-    height: 60px;
-    border-radius: 20px;
-    background: #FFF;
-    justify-content: center;
-    align-items: center;
-    color: #000;
-    font-family: Montserrat;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-top: 6px;
-}
-.right-hero{
-    width: 50%;
-    display: flex;
-    position: relative;
+.button-doar {
+  display: flex;
+  width: 230px;
+  height: 70px;
+  background-color: #4da14c;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  color: #f1f4ef;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
-.right-hero img{
-    display: flex;
-    position: relative;
- 
+.button-ajuda {
+  display: flex;
+  width: 229px;
+  height: 60px;
+  border-radius: 20px;
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  font-family: Montserrat;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 6px;
+}
+.right-hero {
+  width: 50%;
+  display: flex;
+  position: relative;
+}
+
+.right-hero img {
+  display: flex;
+  position: relative;
 }
 
 .cesta {
-    width: 750px;
-    height: 1125px;
-    bottom: 380px;
-    left: 180px;
-    z-index: 5;
+  width: 750px;
+  height: 1125px;
+  bottom: 380px;
+  left: 180px;
+  z-index: 5;
 }
 
-.circulo{
-    width: 650px;
-    height: 650px;
-    right: 520px;
-    bottom: 40px;
-    z-index: 4;
+.circulo {
+  width: 650px;
+  height: 650px;
+  right: 520px;
+  bottom: 40px;
+  z-index: 4;
 }
 
-.maca{
-    width: 554px;
-    height: 358px;
-    right: 1380px;
-    bottom: -230px;
-    transform: rotate(-76.6deg);
-    z-index: 1;
+.maca {
+  width: 554px;
+  height: 358px;
+  right: 1380px;
+  bottom: -230px;
+  transform: rotate(-76.6deg);
+  z-index: 1;
 }
 
-.banana{
-    width: 363px;
-    height: 545px;
-    right: 1350px;
-    bottom: -230px;
-    z-index: 4;
+.banana {
+  width: 363px;
+  height: 545px;
+  right: 1350px;
+  bottom: -230px;
+  z-index: 4;
 }
 
-.pera{
-    width: 266px;
-    height: 400px;
-    right: 1950px;
-    bottom: -380px;
-    transform: rotate(-41deg);
-    z-index: 6;
+.pera {
+  width: 266px;
+  height: 400px;
+  right: 1950px;
+  bottom: -380px;
+  transform: rotate(-41deg);
+  z-index: 6;
 }
