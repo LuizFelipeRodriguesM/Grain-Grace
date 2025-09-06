@@ -45,30 +45,34 @@ export default function Contact() {
         ],
       };
 
-      // Enviar dados para o servidor API
-      console.log("📧 Enviando dados para API...");
-      console.log("Dados coletados:", data);
-
-      const response = await fetch("http://localhost:3001/api/send-email", {
+      // Enviar via API serverless
+      console.log("📧 Enviando email via API /api/send-welcome...");
+      const apiUrl =
+        typeof window !== "undefined" &&
+        window.location.hostname === "localhost"
+          ? "http://localhost:3001/api/send-welcome"
+          : "/api/send-welcome";
+      const resp = await fetch(apiUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: data.email,
-          name: data.name,
-          userType: data.userType,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: data.email, name: data.name, context }),
       });
-
-      const result = await response.json();
+      let result = { success: false };
+      try {
+        result = await resp.json();
+      } catch (_) {
+        // resposta sem JSON
+        result = { success: resp.ok };
+      }
 
       if (result.success) {
         setSubmitStatus("success");
         e.target.reset();
         console.log("✅ Email enviado com sucesso:", result.messageId);
       } else {
-        throw new Error(result.error || "Erro ao enviar email");
+        throw new Error(
+          result.error || `Erro ao enviar email (${resp.status})`
+        );
       }
     } catch (error) {
       console.error("Erro no envio:", error);
