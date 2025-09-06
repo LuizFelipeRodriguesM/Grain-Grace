@@ -1,6 +1,9 @@
 .hero {
   display: flex;
-  margin-bottom: 0;
+  margin-bottom: 32px;
+  /* Limit section height to avoid large gap to next section */
+  height: 720px;
+  overflow: hidden;
 }
 .left-hero {
   width: 50%;
