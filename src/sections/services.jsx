@@ -120,12 +120,12 @@ export default function Services() {
           }
         `}
       </style>
-      <div
-        className="container-fluid vh-100 overflow-hidden d-flex flex-column"
-        style={{ position: "relative", zIndex: 2 }}
-      >
+      <div className="container-fluid vh-100 overflow-hidden d-flex flex-column">
         {/* Header Section */}
-        <div className="row py-2 py-md-3 bg-white" style={{ marginBottom: 0 }}>
+        <div
+          className="row py-2 py-md-3"
+          style={{ marginBottom: 0, backgroundColor: "transparent" }}
+        >
           <div className="col d-flex align-items-center justify-content-start text-dark mx-2 mx-md-4">
             <h2 className="display-6 display-4 display-md-6 w-100 mobile-header-text">
               Como o Grain & Grace funciona na prática - Conectamos produtores e
@@ -138,7 +138,7 @@ export default function Services() {
         <div
           className="row flex-grow-1 mx-2 mx-md-4 pb-2"
           style={{
-            backgroundColor: "#FFFFFF",
+            backgroundColor: "transparent",
             marginTop: 0,
           }}
         >

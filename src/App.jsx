@@ -1,4 +1,5 @@
 import React from "react";
+import Background from "./sections/hero/Background/Background";
 import Hero from "./sections/Hero";
 import Services from "./sections/Services.jsx";
 import Features from "./sections/Features.jsx";
@@ -16,6 +17,7 @@ export default function App() {
         scrollBehavior: "smooth",
       }}
     >
+      <Background />
       <Hero />
       <AboutUs />
       <Services />

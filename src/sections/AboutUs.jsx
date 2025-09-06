@@ -4,20 +4,23 @@ const AboutUs = () => {
   return (
     <section
       className="container d-flex flex-column flex-md-row align-items-start gap-5"
-      style={{ paddingBottom: "8rem" }}
+      style={{ paddingBottom: "8rem", position: "relative", zIndex: 2 }}
     >
       {/* Texto */}
       <div
         className="col-md-5 text-start"
         style={{
           lineHeight: 1.8,
-          color: "#6c757d",
+          color: "#1a202c",
           textAlign: "left",
           paddingRight: "2rem",
           marginTop: "0",
         }}
       >
-        <h2 className="mb-3" style={{ marginLeft: "-2rem", marginTop: "0" }}>
+        <h2
+          className="mb-3"
+          style={{ marginLeft: "-2rem", marginTop: "0", color: "#000000" }}
+        >
           Quem somos
         </h2>
         <p className="fs-5" style={{ marginLeft: "-2rem", marginTop: "0" }}>

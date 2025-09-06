@@ -114,7 +114,7 @@ export default function Contact() {
         {/* Content */}
         <div
           className="row mx-2 mx-md-4 pb-2"
-          style={{ backgroundColor: "#FFFFFF", width: "100%" }}
+          style={{ backgroundColor: "transparent", width: "100%" }}
         >
           <div className="col-12 py-2 py-md-3">
             <div className="card surface border-0" style={{ borderRadius: 24 }}>
