@@ -49,7 +49,7 @@ const AboutUs = () => {
           }}
         >
           <iframe
-            src="https://www.youtube.com/embed/vPVO9Rq0gvQ"
+            src="https://youtu.be/k1_8fikv5qI"
             title="Grain & Grace - Vídeo institucional"
             style={{
               position: "absolute",
