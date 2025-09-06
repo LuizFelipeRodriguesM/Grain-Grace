@@ -1,182 +1,229 @@
-import React from "react";
+import React, { useState } from "react";
 
-const featuresData = [
-  {
-    id: 1,
-    title: "Simples e Intuitivo",
-    description:
-      "Interface clara para cadastrar doações, localizar pontos de coleta e acompanhar entregas.",
-    style: {
-      backgroundColor: "#FFFFFF",
-      h3: { color: "#0D3C2D" },
-      p: { color: "#334155" },
-    },
-  },
-  {
-    id: 2,
-    title: "Seguro e Confiável",
-    description:
-      "Dados protegidos e processos transparentes para todos os participantes da rede.",
-    style: {
-      backgroundColor: "#E5E5E5",
-      h3: { color: "#0D3C2D" },
-      p: { color: "#000000" },
-    },
-  },
-  {
-    id: 3,
-    title: "Acessível e Inclusivo",
-    description:
-      "Experiência pensada para diferentes perfis: produtores, ONGs e beneficiários.",
-    style: {
-      backgroundColor: "#4DA14C",
-      h3: { color: "#FFFFFF" },
-      p: { color: "#FFFFFF" },
-    },
-  },
-  {
-    id: 4,
-    title: "Transparência de Impacto",
-    description:
-      "Acompanhe métricas de doações e resultados sociais em tempo real.",
-    style: {
-      backgroundColor: "#FFFFFF",
-      h3: { color: "#0D3C2D" },
-      p: { color: "#334155" },
-    },
-  },
-  {
-    id: 5,
-    title: "Parcerias que Potencializam",
-    description:
-      "Integrações com organizações locais e voluntários para ampliar o alcance.",
-    style: {
-      backgroundColor: "#E5E5E5",
-      h3: { color: "#0D3C2D" },
-      p: { color: "#000000" },
-    },
-  },
-  {
-    id: 6,
-    title: "Impacto Mensurável",
-    description:
-      "Redução do desperdício e apoio direto a quem precisa, com indicadores claros.",
-    style: {
-      backgroundColor: "#0D3C2D",
-      h3: { color: "#FFFFFF" },
-      p: { color: "#FFFFFF" },
-    },
-  },
+const reactions = [
+  { emoji: "❤️", label: "Amo!", color: "#FF6B6B" },
+  { emoji: "👍", label: "Aprovo!", color: "#4ECDC4" },
+  { emoji: "🤝", label: "Vamos juntos!", color: "#45B7D1" },
+  { emoji: "🌱", label: "Sustentável!", color: "#96CEB4" },
+  { emoji: "⭐", label: "Inspirador!", color: "#FFEAA7" },
+];
+
+const messages = [
+  "Sua reação foi registrada! Obrigado por se importar! 💚",
+  "Cada pequena ação conta! Vamos fazer a diferença juntos! 🌍",
+  "Sua participação faz toda a diferença! Obrigado! 🙏",
+  "Juntos somos mais fortes! Vamos combater o desperdício! 💪",
+  "Sua voz importa! Obrigado por compartilhar sua opinião! 🎉",
 ];
 
 export default function Features() {
+  const [selectedReaction, setSelectedReaction] = useState(null);
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageIndex, setMessageIndex] = useState(0);
+  const [clickCount, setClickCount] = useState(0);
+
+  const handleReaction = (index) => {
+    setSelectedReaction(index);
+    setMessageIndex(Math.floor(Math.random() * messages.length));
+    setShowMessage(true);
+    setClickCount((prev) => prev + 1);
+
+    // Esconde a mensagem após 3 segundos
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 3000);
+  };
+
+  const handleReset = () => {
+    setSelectedReaction(null);
+    setShowMessage(false);
+    setClickCount(0);
+  };
+
   return (
     <>
       <style>
         {`
-          html, body { margin: 0; padding: 0; }
-
-          .hover-soft { transition: transform 180ms ease, box-shadow 180ms ease; }
-          .hover-soft:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+          .hover-soft { transition: transform 180ms ease; }
+          .hover-soft:hover { transform: translateY(-2px) scale(1.01); }
 
           @media (hover: none) { .hover-soft:hover { transform: none; } }
           @media (max-width: 992px) { .hover-soft:hover { transform: none; } }
 
           .mobile-header-text { font-size: clamp(1.4rem, 3.4vw, 3rem) !important; line-height: 1.2; }
-          .mobile-card-title { font-size: clamp(1.2rem, 2.1vw, 2.25rem) !important; line-height: 1.25; }
-          .mobile-card-text { font-size: clamp(1rem, 1.6vw, 1.25rem) !important; line-height: 1.55; }
+          .mobile-sub-text { font-size: clamp(1rem, 1.8vw, 1.25rem) !important; line-height: 1.6; }
+          .reaction-btn {
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            min-width: 140px;
+            min-height: 140px;
+          }
+          .reaction-btn:hover {
+            transform: scale(1.05);
+          }
+          .reaction-btn.active {
+            border-color: currentColor;
+            background: rgba(77, 161, 76, 0.1);
+          }
+          .pulse-animation {
+            animation: pulse 2s infinite;
+          }
+          @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+          }
+          .bounce-in {
+            animation: bounceIn 0.6s ease-out;
+          }
+          @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+          }
         `}
       </style>
 
-      <div className="container-fluid vh-100 overflow-hidden d-flex flex-column">
-        {/* Header */}
-        <div className="row py-2 py-md-3 bg-white" style={{ marginBottom: 0 }}>
-          <div className="col d-flex align-items-center justify-content-start text-dark mx-2 mx-md-4">
-            <div>
-              <div className="d-inline-flex align-items-center gap-2 px-3 py-2 mb-1 bg-white shadow-sm rounded-pill">
-                <span className="text-success" style={{ fontSize: 18 }}>
-                  🌱
-                </span>
-                <span className="text-muted fw-medium">Características</span>
-              </div>
-              <h2 className="display-6 display-4 display-md-6 w-100 mobile-header-text">
-                O que torna o Grain & Grace diferente
-              </h2>
-            </div>
-          </div>
-        </div>
-
-        {/* Features Grid */}
+      <div
+        className="container-fluid"
+        style={{ position: "relative", zIndex: 2 }}
+      >
         <div
-          className="row flex-grow-1 mx-2 mx-md-4 pb-2"
-          style={{ backgroundColor: "#FFFFFF", marginTop: 0 }}
+          className="row mx-2 mx-md-4 pb-2"
+          style={{ backgroundColor: "#FFFFFF" }}
         >
-          <div
-            className="col-12 d-flex flex-column py-2 py-md-3 flex-grow-1"
-            style={{ display: "flex", flexDirection: "column", height: "100%" }}
-          >
+          <div className="col-12 py-2 py-md-3">
             <div
-              className="row gx-4 gx-md-5 gx-lg-6 gy-4 gy-md-4 gy-lg-5"
-              style={{ flex: 1, display: "flex" }}
+              className="card border-0"
+              style={{
+                borderRadius: 24,
+                background: "#FFFFFF",
+              }}
             >
-              {featuresData.slice(0, 3).map((feature) => (
-                <div
-                  key={feature.id}
-                  className="col-lg-4 col-md-6 col-12 d-flex"
-                >
-                  <div
-                    className="card shadow-sm border-0 w-100 h-100 hover-soft"
-                    style={{ ...feature.style, borderRadius: "24px" }}
-                  >
-                    <div className="card-body d-flex flex-column p-2 p-sm-3 p-md-4">
-                      <h3
-                        className="card-title mb-2 mb-md-3 fs-5 fs-md-4 fs-lg-2 fw-light mobile-card-title"
-                        style={feature.style?.h3}
-                      >
-                        {feature.title}
-                      </h3>
-                      <p
-                        className="card-text fs-6 fs-md-5 fs-lg-4 mb-0 fw-light mobile-card-text"
-                        style={feature.style?.p}
-                      >
-                        {feature.description}
-                      </p>
-                    </div>
+              <div className="card-body p-4 p-md-5 text-center">
+                {/* Header */}
+                <div className="mb-4">
+                  <div className="d-inline-flex align-items-center gap-2 px-3 py-2 mb-3 bg-white rounded-pill">
+                    <span className="text-success" style={{ fontSize: 20 }}>
+                      💫
+                    </span>
+                    <span className="text-muted fw-medium">Sua Reação</span>
                   </div>
+                  <h2 className="display-6 display-4 display-md-6 w-100 mobile-header-text mb-3">
+                    O que você acha da nossa missão?
+                  </h2>
+                  <p className="text-muted mobile-sub-text mb-4">
+                    Clique em uma reação abaixo e veja o que acontece! Cada
+                    interação sua importa para nós.
+                  </p>
                 </div>
-              ))}
-            </div>
 
-            <div
-              className="row gx-4 gx-md-5 gx-lg-6 gy-4 gy-md-4 gy-lg-5 mt-1 mt-md-2"
-              style={{ flex: 1, display: "flex" }}
-            >
-              {featuresData.slice(3, 6).map((feature) => (
-                <div
-                  key={feature.id}
-                  className="col-lg-4 col-md-6 col-12 d-flex"
-                >
-                  <div
-                    className="card shadow-sm border-0 w-100 h-100 hover-soft"
-                    style={{ ...feature.style, borderRadius: "24px" }}
-                  >
-                    <div className="card-body d-flex flex-column p-2 p-sm-3 p-md-4">
-                      <h3
-                        className="card-title mb-2 mb-md-3 fs-5 fs-md-4 fs-lg-2 fw-light mobile-card-title"
-                        style={feature.style?.h3}
-                      >
-                        {feature.title}
-                      </h3>
-                      <p
-                        className="card-text fs-6 fs-md-5 fs-lg-4 mb-0 fw-light mobile-card-text"
-                        style={feature.style?.p}
-                      >
-                        {feature.description}
-                      </p>
+                {/* Reaction Buttons */}
+                <div className="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                  {reactions.map((reaction, index) => (
+                    <button
+                      key={index}
+                      className={`reaction-btn d-flex flex-column align-items-center justify-content-center p-3 ${
+                        selectedReaction === index
+                          ? "active pulse-animation"
+                          : ""
+                      }`}
+                      style={{
+                        color:
+                          selectedReaction === index
+                            ? reaction.color
+                            : "#6c757d",
+                      }}
+                      onClick={() => handleReaction(index)}
+                    >
+                      <div style={{ fontSize: 40, marginBottom: 8 }}>
+                        {reaction.emoji}
+                      </div>
+                      <div className="fw-semibold" style={{ fontSize: 14 }}>
+                        {reaction.label}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Counter */}
+                {clickCount > 0 && (
+                  <div className="mb-3">
+                    <div
+                      className="badge bg-success px-3 py-2"
+                      style={{ fontSize: 14 }}
+                    >
+                      🎯 Você interagiu {clickCount} vez
+                      {clickCount > 1 ? "es" : ""}!
+                    </div>
+                  </div>
+                )}
+
+                {/* Message */}
+                {showMessage && (
+                  <div className="bounce-in">
+                    <div
+                      className="alert alert-success d-inline-block"
+                      style={{
+                        borderRadius: 20,
+                        border: "none",
+                      }}
+                    >
+                      <div className="d-flex align-items-center gap-2">
+                        <span style={{ fontSize: 20 }}>✨</span>
+                        <span>{messages[messageIndex]}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Reset Button */}
+                {clickCount > 0 && (
+                  <div className="mt-4">
+                    <button
+                      className="btn btn-outline-secondary btn-sm px-4 py-2"
+                      style={{ borderRadius: 20 }}
+                      onClick={handleReset}
+                    >
+                      🔄 Começar novamente
+                    </button>
+                  </div>
+                )}
+
+                {/* Fun Stats */}
+                <div className="mt-4 pt-3 border-top">
+                  <div className="row g-3">
+                    <div className="col-4">
+                      <div className="text-center">
+                        <div style={{ fontSize: 24 }}>🌍</div>
+                        <div className="text-muted" style={{ fontSize: 12 }}>
+                          Sustentável
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div className="text-center">
+                        <div style={{ fontSize: 24 }}>🤝</div>
+                        <div className="text-muted" style={{ fontSize: 12 }}>
+                          Inclusivo
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div className="text-center">
+                        <div style={{ fontSize: 24 }}>💚</div>
+                        <div className="text-muted" style={{ fontSize: 12 }}>
+                          Solidário
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>

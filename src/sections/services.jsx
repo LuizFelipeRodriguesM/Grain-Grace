@@ -120,7 +120,10 @@ export default function Services() {
           }
         `}
       </style>
-      <div className="container-fluid vh-100 overflow-hidden d-flex flex-column">
+      <div
+        className="container-fluid vh-100 overflow-hidden d-flex flex-column"
+        style={{ position: "relative", zIndex: 2 }}
+      >
         {/* Header Section */}
         <div className="row py-2 py-md-3 bg-white" style={{ marginBottom: 0 }}>
           <div className="col d-flex align-items-center justify-content-start text-dark mx-2 mx-md-4">

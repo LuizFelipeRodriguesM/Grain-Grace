@@ -107,6 +107,7 @@ export default function Contact() {
       </style>
 
       <div
+        id="contact"
         className="container-fluid d-flex align-items-center"
         style={{ position: "relative", zIndex: 2 }}
       >

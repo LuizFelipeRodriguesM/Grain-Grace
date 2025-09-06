@@ -60,7 +60,10 @@ export default function Footer() {
         `}
       </style>
 
-      <footer className="footer-gradient text-white">
+      <footer
+        className="footer-gradient text-white"
+        style={{ position: "relative", zIndex: 2 }}
+      >
         <div className="container-fluid py-5">
           <div className="row mx-2 mx-md-4">
             <div className="col-12">
