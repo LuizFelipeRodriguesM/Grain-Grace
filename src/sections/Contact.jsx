@@ -106,7 +106,10 @@ export default function Contact() {
         `}
       </style>
 
-      <div className="container-fluid vh-100 overflow-hidden d-flex align-items-center">
+      <div
+        className="container-fluid d-flex align-items-center"
+        style={{ position: "relative", zIndex: 2 }}
+      >
         {/* Content */}
         <div
           className="row mx-2 mx-md-4 pb-2"
@@ -210,6 +213,7 @@ export default function Contact() {
                               className="form-select input-lg rounded-2xl focus-ring input-clean"
                               style={{ maxWidth: 120 }}
                               defaultValue={"+55"}
+                              name="phonePrefix"
                             >
                               <option value="+1">+1</option>
                               <option value="+44">+44</option>

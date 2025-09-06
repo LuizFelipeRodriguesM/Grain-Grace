@@ -1,11 +1,7 @@
 import "./Background.css";
 
-function Background(){
-    return(
-        <body>
-
-        </body>
-    );
+function Background() {
+  return <div className="background-root"></div>;
 }
 
 export default Background;

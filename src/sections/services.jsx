@@ -82,17 +82,7 @@ export default function Services() {
     <>
       <style>
         {`
-          html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-          }
-
-          #root {
-            height: 100vh;
-            overflow: hidden;
-          }
+          /* Removed global overflow/height locks to allow page scroll and interactions */
 
           .hover-soft {
             transition: transform 180ms ease, box-shadow 180ms ease;

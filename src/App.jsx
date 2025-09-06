@@ -4,7 +4,7 @@ import Services from "./sections/Services.jsx";
 import Features from "./sections/Features.jsx";
 import Contact from "./sections/Contact.jsx";
 import ShareButton from "./components/ShareButton.jsx";
-import AboutUs from "./sections/aboutUs.jsx";
+import AboutUs from "./sections/AboutUs.jsx";
 import Footer from "./sections/Footer.jsx";
 
 export default function App() {
