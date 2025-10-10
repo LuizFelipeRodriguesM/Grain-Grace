@@ -3,6 +3,7 @@ import Background from "./sections/hero/Background/Background";
 import Hero from "./sections/Hero";
 import Services from "./sections/Services.jsx";
 import Features from "./sections/Features.jsx";
+import MemoryGame from "./sections/MemoryGame.jsx";
 import Contact from "./sections/Contact.jsx";
 import ShareButton from "./components/ShareButton.jsx";
 import AboutUs from "./sections/AboutUs.jsx";
@@ -22,6 +23,7 @@ export default function App() {
       <AboutUs />
       <Services />
       <Features />
+      <MemoryGame />
       <Contact />
       <Footer />
       <ShareButton />
