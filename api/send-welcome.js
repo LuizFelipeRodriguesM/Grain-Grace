@@ -45,6 +45,13 @@ export default async function handler(req, res) {
       context || {}
     );
 
+    // Adiciona mensagem personalizada para exibição no modal
+    if (result.success) {
+      result.message = `Olá ${name || "Cliente"}! Enviamos um email de boas-vindas para ${email}. Verifique sua caixa de entrada e também a pasta de spam.`;
+      result.email = email;
+      result.name = name || "Cliente";
+    }
+
     return res.status(result.success ? 200 : 500).json(result);
   } catch (error) {
     return res

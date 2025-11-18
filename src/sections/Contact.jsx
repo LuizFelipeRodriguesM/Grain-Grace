@@ -3,6 +3,8 @@ import React, { useState } from "react";
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({ name: "", email: "", message: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,6 +69,13 @@ export default function Contact() {
 
       if (result.success) {
         setSubmitStatus("success");
+        // Configura dados para o modal
+        setModalData({
+          name: result.name || data.name,
+          email: result.email || data.email,
+          message: result.message || `Olá ${data.name}! Enviamos um email de boas-vindas para ${data.email}.`
+        });
+        setShowModal(true);
         e.target.reset();
         console.log("✅ Email enviado com sucesso:", result.messageId);
       } else {
@@ -103,6 +112,41 @@ export default function Contact() {
           .surface { border: 1px solid #eef0f2; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
           .input-clean { border: 1px solid #e5e7eb !important; background: #ffffff !important; box-shadow: none !important; }
           .input-clean:focus { border-color: #4DA14C !important; }
+          
+          /* Modal personalizado */
+          .modal-backdrop.show { opacity: 0.7; z-index: 9998; }
+          .success-modal { z-index: 9999; }
+          .success-modal .modal-content { border-radius: 24px; border: none; }
+          .success-modal .modal-header { 
+            border-bottom: none; 
+            padding: 2rem 2rem 1rem 2rem;
+          }
+          .success-modal .modal-body { 
+            padding: 0 2rem 2rem 2rem;
+          }
+          .success-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4DA14C 0%, #0D3C2D 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+            animation: scaleIn 0.5s ease-out;
+          }
+          @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+          }
+          .modal-enter {
+            animation: slideUp 0.3s ease-out;
+          }
+          @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+          }
         `}
       </style>
 
@@ -258,17 +302,7 @@ export default function Contact() {
                           </button>
                         </div>
 
-                        {/* Status Messages */}
-                        {submitStatus === "success" && (
-                          <div className="col-12 mt-3">
-                            <div className="alert alert-success" role="alert">
-                              <i className="bi bi-check-circle-fill me-2"></i>
-                              Cadastro realizado com sucesso! Verifique seu
-                              email para as boas-vindas.
-                            </div>
-                          </div>
-                        )}
-
+                        {/* Status Messages - apenas erro agora, sucesso usa modal */}
                         {submitStatus === "error" && (
                           <div className="col-12 mt-3">
                             <div className="alert alert-danger" role="alert">
@@ -286,6 +320,81 @@ export default function Contact() {
             </div>
           </div>
         </div>
+
+        {/* Modal de Sucesso */}
+        {showModal && (
+          <>
+            <div
+              className="modal-backdrop fade show"
+              onClick={() => setShowModal(false)}
+            ></div>
+            <div
+              className="modal fade show success-modal"
+              style={{ display: "block" }}
+              tabIndex="-1"
+              role="dialog"
+              aria-labelledby="successModalLabel"
+            >
+              <div className="modal-dialog modal-dialog-centered modal-enter">
+                <div className="modal-content shadow-lg">
+                  <div className="modal-header">
+                    <button
+                      type="button"
+                      className="btn-close"
+                      onClick={() => setShowModal(false)}
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body text-center">
+                    <div className="success-icon">
+                      <svg
+                        width="40"
+                        height="40"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <h4 className="mb-3" style={{ color: "#0D3C2D", fontWeight: 600 }}>
+                      Cadastro Realizado com Sucesso!
+                    </h4>
+                    <p className="text-muted fs-5 mb-4" style={{ lineHeight: 1.6 }}>
+                      {modalData.message}
+                    </p>
+                    <div className="d-flex flex-column gap-2 mb-3">
+                      <div className="p-3" style={{ backgroundColor: "#f8f9fa", borderRadius: "12px" }}>
+                        <small className="text-muted d-block mb-1">Nome</small>
+                        <strong style={{ color: "#0D3C2D" }}>{modalData.name}</strong>
+                      </div>
+                      <div className="p-3" style={{ backgroundColor: "#f8f9fa", borderRadius: "12px" }}>
+                        <small className="text-muted d-block mb-1">Email</small>
+                        <strong style={{ color: "#0D3C2D" }}>{modalData.email}</strong>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-success px-5 py-3 mt-2"
+                      style={{
+                        backgroundColor: "#4DA14C",
+                        borderColor: "#4DA14C",
+                        borderRadius: "12px",
+                        fontWeight: 500
+                      }}
+                      onClick={() => setShowModal(false)}
+                    >
+                      Entendi
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
