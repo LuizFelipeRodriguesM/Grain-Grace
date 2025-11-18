@@ -31,5 +31,5 @@ app.post("/api/send-welcome", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`API dev server running on http://localhost:${PORT}`);
+  console.log(`HTTP server running on http://localhost:${PORT}`);
 });
